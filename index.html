@@ -1,9 +1,196 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>Welcome</title>
-    </head>
-    <body>
-        <p>Hello world!</p>
-    </body>
+
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+    <title>NGAT</title>
+    <link rel="stylesheet" href="css/smoothness/jquery-ui.css">
+    <!-- <link rel="stylesheet" href="css/font-awesome.min.css" /> -->
+    <link rel="stylesheet" href="css/ngat.css" />
+
+    <script src="js/jquery-2.1.0.min.js"></script>
+    <script src="js/jquery-ui-1.10.4.custom.min.js"></script>
+    <script src="js/cytoscape.min.js"></script>
+    <script src="js/jquery.cytoscape-edgehandles.js"></script>
+    <script src="js/jquery.cytoscape-panzoom.js"></script>
+    <script src="js/jquery.cytoscape.js-cxtmenu.js"></script>
+    <script src="js/xmlwriter.min.js"></script>
+
+</head>
+
+<body>
+    <div id="toolbar" class="ui-widget-header ui-corner-all">
+        <form>
+            <div id="radio" class="ui-buttonset">
+                <input type="radio" id="btnSelect" name="radio" checked="checked" class="ui-helper-hidden-accessible">
+                <label for="btnSelect" class="ui-button ui-widget ui-state-default ui-button-text-only ui-corner-left ui-state-active tiphover" role="button" aria-disabled="false" aria-pressed="true" title="Select or move a concept"><span class="ui-button-text">Select</span>
+                </label>
+                <input type="radio" id="btnAddNode" name="radio" class="ui-helper-hidden-accessible">
+                <label for="btnAddNode" class="ui-button ui-widget ui-state-default ui-button-text-only tiphover" role="button" aria-disabled="false" aria-pressed="false" title="Add a new concept"><span class="ui-button-text">Concept</span>
+                </label>
+                <input type="radio" id="btnAddEdge" name="radio" class="ui-helper-hidden-accessible">
+                <label for="btnAddEdge" id="btnAddEdgeLabel" class="ui-button ui-widget ui-state-default ui-button-text-only ui-corner-right tiphover" role="button" aria-disabled="false" aria-pressed="false" title="Add a new relationship"><span class="ui-button-text">Relationship</span>
+                </label>
+                <input type="radio" id="btnClear" name="radio" class="ui-helper-hidden-accessible">
+                <label for="btnClear" class="ui-button ui-widget ui-state-default ui-button-text-only ui-corner-right tiphover" role="button" aria-disabled="false" aria-pressed="false" title="Clear the domain model"><span class="ui-button-text">Clear</span>
+                </label>
+                <input type="checkbox" id="btnJson" name="radio" class="ui-helper-hidden-accessible">
+                <label for="btnJson" id="btnJsonLabel" class="ui-button ui-widget ui-state-default ui-button-text-only ui-corner-right tiphover" role="button" aria-disabled="false" aria-pressed="false" title="Show JSON code"><span class="ui-button-text">&nbsp;JSON</span>
+                </label>
+                <input type="checkbox" id="btnXml" name="radio" class="ui-helper-hidden-accessible">
+                <label for="btnXml" id="btnXmlLabel" class="ui-button ui-widget ui-state-default ui-button-text-only ui-corner-right tiphover" role="button" aria-disabled="false" aria-pressed="false" title="Show CAM code (XML / IMS VDEX based)"><span class="ui-button-text"> CAM</span>
+                </label>
+            </div>
+        </form>
+    </div>
+    <div id="cy"></div>
+    <div id="edition">
+        <p id="feedback">
+        </p>
+        <div class="node-edition">
+            <form>
+                <table>
+                    <tr>
+                        <td>Name</td>
+                        <td>
+                            <input type="text" class="node-name">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Description</td>
+                        <td>
+                            <textarea class="node-description"></textarea>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+            <div id="tabs">
+                <ul>
+                    <li><a href="#tabs-1" id="node-res">Resources</a>
+                    </li>
+                    <li><a href="#tabs-2" id="node-prop">Properties</a>
+                    </li>
+                    <li><a href="#tabs-3" id="node-rel">Relationships</a>
+                    </li>
+                </ul>
+                <div id="tabs-1">
+                    <p class="content"></p>
+                    <div style="border: 0px; text-align: center" class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+                        <div class="ui-dialog-buttonset">
+                            <button id="btnAddRes" rel="hover" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" title="Manage Resources" role="button" aria-disabled="false">
+                                <span class="ui-button-text">Manage</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div id="tabs-2">
+                    <p class="content"></p>
+                    <div style="border: 0px; text-align: center" class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+                        <div class="ui-dialog-buttonset">
+                            <button id="btnAddProp" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" title="Manage Properties" role="button" aria-disabled="false">
+                                <span class="ui-button-text">Manage</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div id="tabs-3">
+                    <p class="content"></p>
+                </div>
+            </div>
+        </div>
+        <div class="edge-edition">
+            <table>
+                <tr>
+                    <td>Type:</td>
+                    <td>
+                        <select class="edge-type">
+                            <option value="is-composed-by">is-composed-by</option>
+                            <option value="is-a">is-a</option>
+                            <option value="belong-to">belong-to</option>
+                            <option if="last" value="parent">parent</option>
+
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan=2>
+                        <div style="border: 0px; text-align: center" class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+                            <div class="ui-dialog-buttonset">
+                                <button id="btnAddNewEdge" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" title="Add new type of Relationship" role="button" aria-disabled="false">
+                                    <span class="ui-button-text">Add</span>
+                                </button>
+                                <button id="btnSaveEdge" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false">
+                                    <span class="ui-button-text">Save</span>
+                                </button>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div id="dialog-newdm" class="dialog">
+            <table>
+                <tr>
+                    <td>Title:</td>
+                    <td>
+                        <input type="text" id="dmtitle" class="ui-button ui-widget ui-state-default" style="width: 250px; background-image: none; text-align: left" autofocus>
+                    </td>
+                </tr>
+                <tr>
+                    <tr>
+                        <td>Description:</td>
+                        <td>
+                            <textarea class="ui-button ui-widget ui-state-default" id="dmdesc" style="width: 250px; height: 200px; background-image: none; text-align: left"></textarea>
+                        </td>
+                    </tr>
+            </table>
+
+        </div>
+
+        <div id="dialog-clear" class="dialog">
+            <span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span> The work area will be clean: all items from the map will be deleted. This can not be undone.
+        </div>
+        <div id="dialog-resource" class="dialog">
+            <table>
+                <tr>
+                    <td>URL:</td>
+                    <td>
+                        <select class="resource-list" type="url"></select>
+                    </td>
+                </tr>
+                <tr>
+                    <tr>
+                        <td>Description:</td>
+                        <td>
+                            <textarea class="ui-button ui-widget ui-state-default" id="resval" style="width: 250px; height: 200px; background-image: none; text-align: left" autofocus></textarea>
+                        </td>
+                    </tr>
+            </table>
+        </div>
+        <div id="dialog-property" class="dialog">
+            <p class="content">
+                <label for="property-list">Name:</label>
+                <select class="property-list"></select>
+            </p>
+            <p>
+                <label for="propval">Value:</label>
+                <input type="text" class="ui-button ui-widget ui-state-default" style="text-align: left" id="propval" autofocus>
+            </p>
+        </div>
+    </div>
+
+    <div id="json-edit">
+        <div id="json" contenteditable="true" class="boxsizingBorder"></div>
+    </div>
+
+    <div id="xml-edit">
+        <div id="xml" contenteditable="true" class="boxsizingBorder"></div>
+    </div>
+
+    <script type="text/javascript" src="js/ngat.js"></script>
+
+</body>
+
 </html>
