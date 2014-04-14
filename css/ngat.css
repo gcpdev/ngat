@@ -1,0 +1,325 @@
+#tooltip {
+    text-align: center;
+    color: #fff;
+    background: #111;
+    position: absolute;
+    z-index: 1000;
+    padding: 15px;
+}
+#tooltip:after
+/* triangle decoration */
+ {
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #111;
+    content:'';
+    position: absolute;
+    left: 50%;
+    bottom: -10px;
+    margin-left: -10px;
+}
+#tooltip.top:after {
+    border-top-color: transparent;
+    border-bottom: 10px solid #111;
+    top: -20px;
+    bottom: auto;
+}
+#tooltip.left:after {
+    left: 10px;
+    margin: 0;
+}
+#tooltip.right:after {
+    right: 10px;
+    left: auto;
+    margin: 0;
+}
+.no-close .ui-dialog-titlebar-close {
+    display: none;
+}
+#resource-list_combobox {
+    width: 250px;
+}
+#resource-list_combobox input {
+    width: 220px;
+}
+.string {
+    color: green;
+}
+.number {
+    color: darkorange;
+}
+.boolean {
+    color: magenta;
+}
+.null {
+    color: blue;
+}
+.ui-corner-right {
+    z-index:999;
+}
+#selectable .ui-selecting, #sel-prop .ui-selecting, #sel-res .ui-selecting, #sel-edge .ui-selecting {
+    background: #FECA40;
+}
+#selectable .ui-selected, #sel-prop .ui-selected, #sel-res .ui-selected, #sel-edge .ui-selected {
+    background: #F39814;
+}
+#selectable, #sel-prop, #sel-res, #sel-edge {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    z-index: 1;
+}
+html {
+    height: 98%;
+    overflow: hidden;
+}
+body {
+    font-family: Verdana, Arial, Times New Roman;
+    font-size:11px;
+    height: 100%;
+}
+*, *:before, *:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+#toolbar {
+    padding: 1px;
+    width: 100%;
+    text-align: center;
+}
+#cy {
+    height: 90%;
+    width: 60%;
+    float: left;
+    position: relative;
+    top: 5px;
+    left: 0px;
+    border: 1px solid #aaa;
+    border-radius:5px;
+    -webkit-border-radius:5px;
+    padding: 0px;
+    display: block;
+    z-index: 1;
+}
+#json-edit {
+    white-space: pre;
+    height: 90%;
+    width: 60%;
+    float: left;
+    position: relative;
+    top: 5px;
+    left: 0px;
+    border: 1px solid #aaa;
+    border-radius:5px;
+    -webkit-border-radius:5px;
+    padding: 0px;
+    z-index: 1;
+}
+#json {
+    height: 98%;
+    width: auto;
+    float: auto;
+    position: relative;
+    top: -22px;
+    left: 0px;
+    padding: 10px;
+    z-index: -1;
+    overflow: auto;
+}
+#xml-edit {
+    white-space: pre;
+    height: 90%;
+    width: 60%;
+    float: left;
+    position: relative;
+    top: 5px;
+    left: 0px;
+    border: 1px solid #aaa;
+    border-radius:5px;
+    -webkit-border-radius:5px;
+    padding: 0px;
+    z-index: 1;
+}
+#xml {
+    height: 98%;
+    width: auto;
+    float: auto;
+    position: relative;
+    top: -22px;
+    left: 0px;
+    padding: 10px;
+    z-index: -1;
+    overflow: auto;
+}
+#edition {
+    float: right;
+    height: 90%;
+    width: 39.5%;
+    position: relative;
+    top: 5px;
+    border: 1px solid #aaa;
+    border-radius:5px;
+    -webkit-border-radius:5px;
+    padding: 0px;
+    display: block;
+    z-index: 1;
+}
+.li-left-rel {
+    display: table-cell;
+    width: 30%;
+    z-index: -1;
+    vertical-align: middle;
+}
+.li-center-rel {
+    display: table-cell;
+    width: 40%;
+    z-index: -1;
+    vertical-align: middle;
+}
+.li-right-rel {
+    display: table-cell;
+    width: 30%;
+    z-index: -1;
+    vertical-align: middle;
+}
+.li-left {
+    float: left;
+    width: 65%;
+    z-index: -1;
+    overflow: hidden;
+    display: inline-block;
+    -o-text-overflow: ellipsis;
+    /* Opera */
+    text-overflow: ellipsis;
+    /* IE, Safari (WebKit) */
+    overflow:hidden;
+    /* don't show excess chars */
+    white-space:nowrap;
+    /* force single line */
+}
+.li-center {
+    width: 5%;
+    z-index: -1;
+    overflow: hidden;
+    display: inline-block;
+}
+.li-right {
+    width: 30%;
+    float: right;
+    z-index: -1;
+    overflow: hidden;
+    display: inline-block;
+    -o-text-overflow: ellipsis;
+    /* Opera */
+    text-overflow: ellipsis;
+    /* IE, Safari (WebKit) */
+    overflow:hidden;
+    /* don't show excess chars */
+    white-space:nowrap;
+    /* force single line */
+}
+#tabs-3 .content li {
+    overflow: hidden;
+    height: 50px;
+    display: table;
+    width: 100%;
+    vertical-align: middle;
+}
+.content li {
+    overflow: hidden;
+    height: 50px;
+    display: inline-block;
+    width: 100%;
+    vertical-align: middle;
+    z-index: 1;
+}
+input, textarea {
+    border: 1px solid #aaa;
+    padding: 5px;
+    border-radius:5px;
+    -webkit-border-radius:5px;
+}
+input.custom-combobox-input {
+    z-index: -1;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 5px;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 0px;
+    -webkit-border-bottom-right-radius: 0px;
+    -webkit-border-bottom-left-radius: 5px;
+}
+.node-name, .node-description {
+    max-width: 350px;
+    width: 250px;
+}
+.ui-dialog .ui-dialog-title .ui-icon {
+    float: left;
+    margin-right: 4px;
+}
+.ui-dialog, .ui-dialog .ui-dialog-content {
+    padding: 10px;
+    overflow: visible;
+    z-index: 999;
+    vertical-align: top;
+}
+.ui-button-text-icon-primary .ui-button-text, .ui-button-text-icons .ui-button-text {
+    padding: 0.35em 1.2em;
+}
+.ui-dialog .ui-dialog-buttonpane {
+    text-align: center;
+}
+.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
+    float: none;
+}
+.ui-dialog-buttonset .tipclick{
+	
+}
+.ui-dialog-buttonset .tiphover{
+
+}
+.custom-combobox {
+    position: relative;
+    display: inline-block;
+	height: 30px;
+}
+.custom-combobox-input {
+    margin: 0;
+    padding: 7px;
+    max-height: 40px;
+    vertical-align: top;
+}
+.edge-edition, .node-edition, .dialog {
+    display: none;
+    padding: 5px;
+    height: auto;
+}
+.ui-button {
+    line-height: 30px;
+    position: relative;
+    height: 30px;
+}
+.ui-button-text {
+    vertical-align: middle;
+    line-height: 30px;
+    height: 30px;
+    margin-top: 0px;
+}
+.ui-button-icon-primary {
+    margin: 0px;
+}
+#tabs-3 {
+    margin-left: auto;
+    margin-right: auto;
+}
+li.ui-widget-content {
+    padding: 0.3em;
+    margin: 3px;
+}
+.ui-corner-all {
+    z-index: 999;
+}

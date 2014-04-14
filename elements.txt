@@ -1,0 +1,50 @@
+
+        // nós
+        "nodes": [{
+            "data": {
+                "id": "4D8FD293-9A10-4BD1-D3C0-EEF6F6550554",
+                "name": "Página",
+                "description": "Uma página da Web",
+                "resources": [{
+                    "id": uuid(),
+                    "name": "http://www.google.com",
+                    "value": "Google Home Page"
+                }, {
+                    "id": uuid(),
+                    "name": "http://grapple.win.tue.nl/home.html",
+                    "value": "Grapple Project Website"
+                }],
+                "properties": [{
+                    "id": uuid(),
+                    "name": "Color",
+                    "value": "Gray"
+                }, {
+                    "id": uuid(),
+                    "name": "Shape",
+                    "value": "Square"
+                }]
+            }
+        }, {
+            "data": {
+                "id": "7661D656-523C-4DEB-A8EB-BE4EB67F96CD",
+                "name": "Link",
+                "description": "Um atalho para outra página",
+                "properties": [],
+                "resources": []
+            }
+        }],
+        "edges": [{
+            "data": {
+                "source": "4D8FD293-9A10-4BD1-D3C0-EEF6F6550554",
+                "uuid": "e0",
+                "target": "7661D656-523C-4DEB-A8EB-BE4EB67F96CD",
+                "type": "parent"
+            }
+        }, {
+            "data": {
+                "source": "7661D656-523C-4DEB-A8EB-BE4EB67F96CD",
+                "uuid": "e1",
+                "target": "4D8FD293-9A10-4BD1-D3C0-EEF6F6550554",
+                "type": "belong-to"
+            }
+        }]

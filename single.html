@@ -1,0 +1,184 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+    <title>Single File</title>
+
+    <style type="text/css">
+        html {
+            height: 90%;
+        }
+        body {
+            font-family: Verdana, Arial, Times New Roman;
+            font-size:11px;
+            height: 100%;
+        }
+        #cy {
+            height: 100%;
+            width: 100%;
+            float: left;
+            position: relative;
+            top: 10px;
+            left: 0px;
+            border: 1px solid #aaa;
+            border-radius:5px;
+            -webkit-border-radius:5px;
+            padding: 0px;
+            display: block;
+            z-index: 1;
+        }
+		#toolbar {
+            padding: 4px;
+            width: 59.5%;
+            text-align: center;
+            -moz-user-select: -moz-none;
+            -khtml-user-select: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="toolbar" class="ui-widget-header ui-corner-all">
+        <form>
+            <div id="radio" class="ui-buttonset">
+                <input type="radio" id="btnSelect" name="radio" checked="checked" class="ui-helper-hidden-accessible">
+                <label for="btnSelect" class="ui-button ui-widget ui-state-default ui-button-text-only ui-corner-left ui-state-active" role="button" aria-disabled="false" aria-pressed="true"><span class="ui-button-text">Move</span>
+                </label>
+                <input type="radio" id="btnAddNode" name="radio" class="ui-helper-hidden-accessible">
+                <label for="btnAddNode" class="ui-button ui-widget ui-state-default ui-button-text-only" role="button" aria-disabled="false" aria-pressed="false"><span class="ui-button-text">Add Node</span>
+                </label>
+                <input type="radio" id="btnAddEdge" name="radio" class="ui-helper-hidden-accessible">
+                <label for="btnAddEdge" class="ui-button ui-widget ui-state-default ui-button-text-only ui-corner-right" role="button" aria-disabled="false" aria-pressed="false"><span class="ui-button-text">Add Edge</span>
+                </label>
+            </div>
+        </form>
+    </div>
+    <div id="cy"></div>
+
+    <script src="js/jquery-2.0.2.js" type="text/javascript"></script>
+    <script src="js/cytoscape.min.js"></script>
+    <script src="js/jquery.cytoscape-edgehandles.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#radio").buttonset();
+            $("#radio").find("label").unbind("mouseup");
+            $("#btnSelect").button("option", "icons", {
+                primary: 'ui-icon-arrow-4'
+            });
+            $("#btnAddNode").button("option", "icons", {
+                primary: 'ui-icon-plusthick'
+            });
+            $("#btnAddEdge").button("option", "icons", {
+                primary: 'ui-icon-arrow-1-e'
+            });
+        });
+        var $cy = $("#cy");
+         //cytoscape edge-handles is the add-on wich allows drawing edges		
+        $cy.cytoscapeEdgehandles({
+            lineType: "straight",
+            preview: true,
+            handleSize: 12,
+            handleColor: "orange",
+            edgeType: function() {
+                return "flat";
+            },
+            nodeParams: function() {
+                return {
+                    classes: "intermediate"
+                };
+            }
+        });
+        $('#btnSelect').click(function() {
+            $('#cy').cytoscapeEdgehandles('disable');
+        });
+        $('#btnAddNode').click(function() {
+            $('#cy').cytoscapeEdgehandles('disable');
+        });
+        $('#btnAddEdge').click(function() {
+            $('#cy').cytoscapeEdgehandles('enable');
+        });
+        $cy.cytoscape({
+            showOverlay: true,
+            minZoom: 0.1,
+            maxZoom: 2.0,
+            layout: {
+                fit: true
+            }, // works when "random"
+            style: cytoscape.stylesheet().selector(".ui-cytoscape-edgehandles-source").css({
+                "border-color": "#5CC2ED",
+                "border-width": 3
+            }).selector(".ui-cytoscape-edgehandles-target, node.ui-cytoscape-edgehandles-preview").css({
+                "background-color": "#5CC2ED"
+            }).selector("edge.ui-cytoscape-edgehandles-preview").css({
+                "line-color": "#5CC2ED"
+            }).selector("node.ui-cytoscape-edgehandles-preview, node.intermediate").css({
+                "shape": "rectangle",
+                "width": 15,
+                "height": 15
+            }).selector('node').css({
+                'content': 'data(name)',
+                'text-valign': 'center',
+                'color': 'white',
+                'text-outline-width': 2,
+                'text-outline-color': '#888'
+            }).selector('edge').css({
+                'target-arrow-shape': 'triangle',
+                'content': 'data(type)',
+                'text-outline-color': '#FFFFFF',
+                'text-outline-opacity': '1',
+                'text-outline-width': 2,
+                'text-valign': 'center',
+                'color': '#777777',
+                'width': '2px'
+            }).selector(':selected').css({
+                'background-color': 'black',
+                'line-color': 'black',
+                'target-arrow-color': 'black',
+                'source-arrow-color': 'black',
+                'color': 'black'
+            }).selector('.faded').css({
+                'opacity': 0.25,
+                'text-opacity': 0
+            }),
+            ready: function() {
+                cy = this;
+				//disable edge-handles, enabling it only on click in #btnAddEdge
+                $('#cy').cytoscapeEdgehandles('disable');
+				
+                cy.on('tap', function(e) {
+                    if(e.cyTarget === cy) {
+						//on tap on cy, if #btnAddNode is checked
+                        if($("input:radio[id=btnAddNode]")[0].checked) {
+							//then add a node at that position
+                            var idNum = cy.nodes().size(),
+                                setID = idNum.toString(),
+                                offset = $cy.offset(),
+                                position = {
+                                    x: e.originalEvent.pageX - offset.left,
+                                    y: e.originalEvent.pageY - offset.top
+                                };
+                            cy.add([{
+                                group: "nodes",
+                                data: {
+                                    "id": "n" + setID,
+                                    "resources": [],
+                                    "properties": []
+                                },
+                                renderedPosition: {
+                                    x: position.x,
+                                    y: position.y
+                                },
+                            }]);
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+
+</body>
+
+</html>
