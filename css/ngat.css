@@ -72,8 +72,8 @@
     z-index: 1;
 }
 html {
-    height: 98%;
-    overflow: hidden;
+    height: 97.5%;
+    overflow: auto;
 }
 body {
     font-family: Verdana, Arial, Times New Roman;
@@ -119,7 +119,7 @@ body {
     z-index: 1;
 }
 #json {
-    height: 98%;
+    height: 97.5%;
     width: auto;
     float: auto;
     position: relative;
@@ -144,7 +144,7 @@ body {
     z-index: 1;
 }
 #xml {
-    height: 98%;
+    height: 97.5%;
     width: auto;
     float: auto;
     position: relative;
@@ -156,7 +156,8 @@ body {
 }
 #edition {
     float: right;
-    height: 90%;
+    height: auto;
+	min-height: 90%;
     width: 39.5%;
     position: relative;
     top: 5px;
