@@ -4,10 +4,9 @@ dm_createdate = null,
 dm_updatedate = null,
 dm_uuid = '';
 $(document).ready(function() {
-	//desativa o envio de formulários, para evitar problemas
-	//de recarregamento da página e perda de informações
-	$('form').submit(false);
-
+    //desativa o envio de formulários, para evitar problemas
+    //de recarregamento da página e perda de informações
+    $('form').submit(false);
     if(isTouch()) {
         //se for dispositivo móvel, então remove os tooltips iniciais
         $('button').removeClass('tiphover');
@@ -52,8 +51,8 @@ $(document).ready(function() {
             $('div.node-edition').hide();
             cy.elements().unselect();
             jsonCode = JSON.stringify(cy.elements().jsons(), undefined, 2);
-			//Removendo o '[' inicial e ']' final da string. Apenas estética.
-			jsonCode = jsonCode.substr(0, jsonCode.length-2).substr(2);
+            //Removendo o '[' inicial e ']' final da string. Apenas estética.
+            jsonCode = jsonCode.substr(0, jsonCode.length - 2).substr(2);
             $("#json").html(syntaxHighlight(jsonCode));
             $("#json-edit").show();
             boolCy = false;
@@ -68,7 +67,7 @@ $(document).ready(function() {
             }
             $("#cy").show();
             cy.reset();
-			cy.fit();
+            cy.fit();
             boolJson = false;
             boolXml = false;
             boolCy = true;
@@ -96,7 +95,7 @@ $(document).ready(function() {
             $("#xml-edit").hide();
             $("#cy").show();
             cy.reset();
-			cy.fit();
+            cy.fit();
             boolJson = false;
             boolXml = false;
             boolCy = true;
@@ -104,8 +103,13 @@ $(document).ready(function() {
     })
 });
 
-function isTouch() { //esta função detecta se a NGAT está sendo exibida em um dispositivo com tela sensível ao toque
-    return('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0);
+function isTouch() { //esta função detecta se a NGAT está sendo exibida em um dispositivo com tela sensível ao toque;
+    try {
+        document.createEvent("TouchEvent");
+        return true;
+    } catch(e) {
+        return false;
+    }
 };
 
 $(document).on('click focusout', '#edge-type_combobox input.custom-combobox-input, ul.ui-autocomplete', function() {
@@ -142,7 +146,6 @@ $(document).on('click focusout', '#edge-type_combobox input.custom-combobox-inpu
         }
     });
 });
-
 $(document).on('click focusout', '#resource-list_combobox input.custom-combobox-input, #property-list_combobox input.custom-combobox-input, ul.ui-autocomplete', function() {
     $.each(cy.$('node:selected'), function(k, v) {
         if($("#dialog-resource").dialog('isOpen')) {
@@ -162,7 +165,6 @@ $(document).on('click focusout', '#resource-list_combobox input.custom-combobox-
         }
     });
 });
-
 /*
  * Funções a serem executadas após o carregamento da página
  */
@@ -325,13 +327,14 @@ $(window).load(function() {
         };
         setTimeout(function() {
             remove_tooltip();
-        }, 3000);
+        }, 3000);		
+        tooltip.on('click touchstart MSGestureTap', remove_tooltip);
     });
 });
-
 /*
  * Função geradora do código UUID dos elementos do DM
  */
+
 function uuid() {
     var d = new Date().getTime();
     var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -885,13 +888,13 @@ $cy.cytoscape({
         'content': 'data(name)',
         'text-valign': 'center',
         'color': 'white',
-		'font-size': '11px',
+        'font-size': '11px',
         'text-outline-width': 2,
         'text-outline-color': '#888'
     }).selector('edge').css({
         'target-arrow-shape': 'triangle',
         'content': 'data(type)',
-		'font-size': '11px',
+        'font-size': '11px',
         'text-outline-color': '#FFFFFF',
         'text-outline-opacity': '1',
         'text-outline-width': 2,
@@ -1000,7 +1003,7 @@ $cy.cytoscape({
             commands: [{
                 content: '<label>Connect</label>',
                 select: function() {
-					this.select();
+                    this.select();
                     $('#cy').cytoscapeEdgehandles('start', this.id());
                 }
             }, {
@@ -1021,7 +1024,7 @@ $cy.cytoscape({
             commands: [{
                 content: '<label>Invert</label>',
                 select: function() {
-					this.select();
+                    this.select();
                     var edge = cy.$('edge:selected');
                     cy.remove(edge);
                     var target = edge.data('target');
