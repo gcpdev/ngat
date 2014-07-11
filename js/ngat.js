@@ -108,7 +108,8 @@ function isTouch() { //esta função detecta se a NGAT está sendo exibida em um
         document.createEvent("TouchEvent");
         return true;
     } catch(e) {
-        return false;
+		if ( (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0) ) return true; //verificação no IE
+        else return false;
     }
 };
 
