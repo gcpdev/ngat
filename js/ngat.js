@@ -8,6 +8,7 @@ $(document).ready(function() {
     //de recarregamento da página e perda de informações
     $('form').submit(false);
     if(isTouch()) {
+		
         //se for dispositivo móvel, então remove os tooltips iniciais
         $('button').removeClass('tiphover');
         $('button').removeClass('tipclick');
@@ -103,14 +104,20 @@ $(document).ready(function() {
     })
 });
 
+	function hideTooltips(){
+		$("div#tooltip").hide();
+	}
+
 function isTouch() { //esta função detecta se a NGAT está sendo exibida em um dispositivo com tela sensível ao toque;
+	/*console.log("é touch");
     try {
         document.createEvent("TouchEvent");
         return true;
     } catch(e) {
 		if ( (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0) ) return true; //verificação no IE
         else return false;
-    }
+    }*/
+	return !!('ontouchstart' in window) || (!!('onmsgesturechange' in window) && !!window.navigator.maxTouchPoints);
 };
 
 $(document).on('click focusout', '#edge-type_combobox input.custom-combobox-input, ul.ui-autocomplete', function() {
@@ -152,14 +159,14 @@ $(document).on('click focusout', '#resource-list_combobox input.custom-combobox-
         if($("#dialog-resource").dialog('isOpen')) {
             try {
                 var option = $('option:selected')[2].index;
-                console.log(v.data('resources')[option]);
+                //console.log(v.data('resources')[option]);
                 $("#resval").val(v.data('resources')[option].value);
             } catch(e) {;
             }
         } else if($("#dialog-property").dialog('isOpen')) {
             try {
                 var option = $('option:selected')[1].index;
-                console.log(v.data('properties')[option]);
+                //console.log(v.data('properties')[option]);
                 $("#propval").val(v.data('properties')[option].value);
             } catch(e) {;
             }
@@ -650,7 +657,7 @@ $(function() {
                         var nextId;
                         if(v.data('properties').length == 0) nextId = 1;
                         else nextId = v.data('properties').length + 1;
-                        console.log(v.data('properties'));
+                        //console.log(v.data('properties'));
                         var newRes = {
                             "id": nextId,
                             "name": enteredValue1,
@@ -751,7 +758,7 @@ $(function() {
                             var nextId;
                             if(v.data('resources').length == 0) nextId = 1;
                             else nextId = v.data('resources').length + 1;
-                            console.log(v.data('resources'));
+                            //console.log(v.data('resources'));
                             var newRes = {
                                 "id": nextId,
                                 "name": enteredValue1,
@@ -800,6 +807,7 @@ $(function() {
             click: function() {
                 var node = cy.$('node:selected');
                 clickInNode(node);
+				hideTooltips();
                 $(this).dialog("close");
             }
         }]
