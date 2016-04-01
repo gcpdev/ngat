@@ -4,4 +4,4 @@ It was designed to support cross-platform devices, and so it was built with jQue
 
 In case of need, feel free to contact at gpublio at gmail and I'll answer you as soon as possible. 
 
-<img src='https://media.giphy.com/media/3xz2BH2JO1oqX6OUpy/giphy-downsized-large.gif">
+<img src="https://media.giphy.com/media/3xz2BH2JO1oqX6OUpy/giphy-downsized-large.gif">
